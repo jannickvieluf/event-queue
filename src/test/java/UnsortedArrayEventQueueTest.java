@@ -1,3 +1,4 @@
+import de.nordakademie.EventQueue;
 import de.nordakademie.vieluf.UnsortedArrayEventQueue;
 import de.nordakademie.vieluf.factory.UnsortedArrayEventQueueFactory;
 import org.junit.jupiter.api.Assertions;
@@ -10,12 +11,13 @@ public class UnsortedArrayEventQueueTest {
 
     @Test
     public void testUnsortedArrayEventQueueFactory() {
-        Assertions.assertNotNull(new UnsortedArrayEventQueueFactory<>().createQueue());
+        EventQueue<Object> eventQueue = new UnsortedArrayEventQueueFactory<>().createQueue();
+        Assertions.assertTrue(eventQueue instanceof UnsortedArrayEventQueue<Object>);
     }
 
     @Test
     public void testUnsortedArrayEventQueue() {
-        UnsortedArrayEventQueue<Object> eventQueue = (UnsortedArrayEventQueue<Object>) new UnsortedArrayEventQueueFactory<>().createQueue();
+        EventQueue<Object> eventQueue = new UnsortedArrayEventQueueFactory<>().createQueue();
         double[] testData = createTestData();
 
         double minTimeStamp = Arrays

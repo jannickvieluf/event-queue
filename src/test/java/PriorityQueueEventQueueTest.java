@@ -1,4 +1,5 @@
 import de.nordakademie.EventQueue;
+import de.nordakademie.vieluf.PriorityQueueEventQueue;
 import de.nordakademie.vieluf.factory.PriorityQueueEventQueueFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,8 @@ public class PriorityQueueEventQueueTest {
 
     @Test
     public void testPriorityQueueEventQueueFactory() {
-        Assertions.assertNotNull(new PriorityQueueEventQueueFactory<>().createQueue());
+        EventQueue<Object> eventQueue = new PriorityQueueEventQueueFactory<>().createQueue();
+        Assertions.assertTrue(eventQueue instanceof PriorityQueueEventQueue<Object>);
     }
 
     @Test

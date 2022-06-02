@@ -1,4 +1,5 @@
 import de.nordakademie.EventQueue;
+import de.nordakademie.vieluf.ArrayEventQueue;
 import de.nordakademie.vieluf.factory.ArrayEventQueueFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,12 +11,16 @@ public class ArrayEventQueueTest {
 
     @Test
     public void testArrayEventQueueFactory() {
-        Assertions.assertNotNull(new ArrayEventQueueFactory<>().createQueue());
+        EventQueue<Object> eventQueue = new ArrayEventQueueFactory<>().createQueue();
+        Assertions.assertTrue(eventQueue instanceof ArrayEventQueue<Object>);
     }
 
     @Test
     public void testArrayEventQueue() {
         EventQueue<Object> eventQueue = new ArrayEventQueueFactory<>().createQueue();
+        if (eventQueue instanceof ArrayEventQueue<Object>) {
+            Assertions.fail();
+        }
         double[] testData = createTestData();
 
         double minTimeStamp = Arrays

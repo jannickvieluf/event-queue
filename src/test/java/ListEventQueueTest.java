@@ -1,4 +1,5 @@
 import de.nordakademie.EventQueue;
+import de.nordakademie.vieluf.ListEventQueue;
 import de.nordakademie.vieluf.factory.ListEventQueueFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,8 @@ public class ListEventQueueTest {
 
     @Test
     public void testListEventQueueFactory() {
-        Assertions.assertNotNull(new ListEventQueueFactory<>().createQueue());
+        EventQueue<Object> eventQueue = new ListEventQueueFactory<>().createQueue();
+        Assertions.assertTrue(eventQueue instanceof ListEventQueue<Object>);
     }
 
     @Test
