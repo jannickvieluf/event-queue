@@ -33,6 +33,8 @@ public class Experiment {
         this.tests = tests;
         this.measurements = measurements;
 
+        threadTimer.setThreadCpuTimeEnabled(true);
+
         for (int i = 0; i < initialSize; i++) {
             initialDataSet.put(random.nextDouble(Double.MIN_VALUE, Double.MAX_VALUE), new Object());
         }
@@ -57,9 +59,8 @@ public class Experiment {
                 eventQueue.dequeue();
                 if (i % (tests / measurements) == 0) {
                     long measurementStopTime = threadTimer.getCurrentThreadCpuTime();
-                    timeMeasurements.add((measurementStopTime - measurementStartTime) / (double) (tests / measurements));
+                    timeMeasurements.add((measurementStopTime - measurementStartTime) / ((double) tests / measurements));
                     measurementStartTime = threadTimer.getCurrentThreadCpuTime();
-                    measurementStartTime = threadTimer.get
                 }
             }
             System.out.println(eventQueueName + ":");
