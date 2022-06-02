@@ -38,10 +38,9 @@ public class ListEventQueue<E> implements EventQueue<E> {
         return queue.remove(0);
     }
 
-    public void printEvents() {
-        for (Entry<E> entry : queue) {
-            System.out.println(entry.time());
-        }
+    @Override
+    public boolean hasNext() {
+        return !queue.isEmpty();
     }
 
     private record EntryImpl<E>(Double time, E event) implements Entry<E> {

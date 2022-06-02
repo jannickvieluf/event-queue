@@ -6,6 +6,8 @@ public interface EventQueue<E> {
 
     EventQueue.Entry<E> dequeue();
 
+    boolean hasNext();
+
     interface Entry<E> {
 
         Double time();

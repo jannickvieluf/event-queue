@@ -28,6 +28,11 @@ public class PriorityQueueEventQueue<E> implements EventQueue<E> {
         return queue.remove();
     }
 
+    @Override
+    public boolean hasNext() {
+        return queue.size() > 0;
+    }
+
     public void printEvents() {
         while (queue.iterator().hasNext()) {
             System.out.println(queue.remove().time());

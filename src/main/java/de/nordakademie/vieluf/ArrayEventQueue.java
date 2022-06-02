@@ -40,6 +40,11 @@ public class ArrayEventQueue<E> implements EventQueue<E> {
         return entry;
     }
 
+    @Override
+    public boolean hasNext() {
+        return entryCount > 0;
+    }
+
     private int binaryInsertion(double time) {
         int low = 0;
         int high = entryCount;
@@ -63,12 +68,6 @@ public class ArrayEventQueue<E> implements EventQueue<E> {
         Entry<E>[] copy = new Entry[newSize];
         System.arraycopy(array, 0, copy, 0, entryCount);
         array = copy;
-    }
-
-    public void printEvents() {
-        for (int i = 0; i < entryCount; i++) {
-            System.out.println(array[i].time());
-        }
     }
 
     private record EntryImpl<E>(Double time, E event) implements Entry<E> {

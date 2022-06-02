@@ -48,6 +48,11 @@ public class UnsortedArrayEventQueue<E> implements EventQueue<E> {
         return entry;
     }
 
+    @Override
+    public boolean hasNext() {
+        return entryCount > 0;
+    }
+
     public void printEvents() {
         for (int i = 0; i < entryCount; i++) {
             System.out.println(array[i].time());
