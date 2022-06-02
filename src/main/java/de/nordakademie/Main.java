@@ -16,5 +16,6 @@ public class Main {
         );
         Experiment experiment = new Experiment(eventQueueFactories, 100_000, 10_000, 10);
         experiment.testEventQueues();
+        // Foo
     }
 }
