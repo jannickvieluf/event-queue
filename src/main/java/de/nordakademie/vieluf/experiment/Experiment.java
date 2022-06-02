@@ -59,6 +59,7 @@ public class Experiment {
                     long measurementStopTime = threadTimer.getCurrentThreadCpuTime();
                     timeMeasurements.add((measurementStopTime - measurementStartTime) / (double) (tests / measurements));
                     measurementStartTime = threadTimer.getCurrentThreadCpuTime();
+                    measurementStartTime = threadTimer.get
                 }
             }
             System.out.println(eventQueueName + ":");

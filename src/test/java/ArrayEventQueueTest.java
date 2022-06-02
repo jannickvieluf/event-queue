@@ -18,9 +18,6 @@ public class ArrayEventQueueTest {
     @Test
     public void testArrayEventQueue() {
         EventQueue<Object> eventQueue = new ArrayEventQueueFactory<>().createQueue();
-        if (eventQueue instanceof ArrayEventQueue<Object>) {
-            Assertions.fail();
-        }
         double[] testData = createTestData();
 
         double minTimeStamp = Arrays
