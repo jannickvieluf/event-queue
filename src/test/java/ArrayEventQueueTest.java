@@ -16,38 +16,52 @@ public class ArrayEventQueueTest {
     }
 
     @Test
-    public void testArrayEventQueue() {
+    public void testStaticArrayEventQueue() {
         EventQueue<Object> eventQueue = new ArrayEventQueueFactory<>().createQueue();
-        double[] testData = createTestData();
-
-        double minTimeStamp = Arrays
+        double[] testData = createTestData(100);
+        double currentTimeStamp = Arrays
                 .stream(testData)
                 .min()
-                .orElseThrow(() -> new RuntimeException("No min value on empty stream"));
-        double maxTimeStamp = Arrays
-                .stream(testData)
-                .max()
-                .orElseThrow(() -> new RuntimeException("No max value on empty stream"));
+                .orElseThrow(() -> new RuntimeException("Empty test data"));
 
         for (double timeStamp : testData) {
             eventQueue.enqueue(timeStamp, new Object());
         }
 
-        for (int i = 0; i < testData.length; i++) {
-            if (i == 0) {
-                Assertions.assertEquals(minTimeStamp, eventQueue.dequeue().time().doubleValue());
-                continue;
-            }
-            if (i == testData.length - 1) {
-                Assertions.assertEquals(maxTimeStamp, eventQueue.dequeue().time().doubleValue());
-                continue;
-            }
-            eventQueue.dequeue();
+        while (eventQueue.hasNext()) {
+            Assertions.assertTrue(eventQueue.dequeue().time() >= currentTimeStamp);
         }
     }
 
-    private double[] createTestData() {
-        double[] data = new double[100];
+    @Test
+    public void testDynamicArrayEventQueue() {
+        EventQueue<Object> eventQueue = new ArrayEventQueueFactory<>().createQueue();
+        double[] baseData = createTestData(100);
+        double currentTimeStamp = Arrays
+                .stream(baseData)
+                .min()
+                .orElseThrow(() -> new RuntimeException("Empty test data"));
+        double[] testData = createTestData(50);
+
+        for (double timeStamp : baseData) {
+            eventQueue.enqueue(timeStamp, new Object());
+        }
+
+        int i = 0;
+        while (eventQueue.hasNext()) {
+            Assertions.assertTrue(eventQueue.dequeue().time() >= currentTimeStamp);
+            if (i < testData.length) {
+                if (testData[i] < currentTimeStamp) {
+                    currentTimeStamp = testData[i];
+                }
+                eventQueue.enqueue(testData[i], new Object());
+                i++;
+            }
+        }
+    }
+
+    private double[] createTestData(int size) {
+        double[] data = new double[size];
         ThreadLocalRandom random = ThreadLocalRandom.current();
         for (int i = 0; i < data.length; i++) {
             data[i] = random.nextDouble(Double.MIN_VALUE, Double.MAX_VALUE);
