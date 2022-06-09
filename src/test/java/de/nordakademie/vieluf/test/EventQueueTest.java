@@ -1,24 +1,23 @@
+package de.nordakademie.vieluf.test;
+
 import de.nordakademie.EventQueue;
-import de.nordakademie.vieluf.ListEventQueue;
-import de.nordakademie.vieluf.factory.ArrayEventQueueFactory;
-import de.nordakademie.vieluf.factory.ListEventQueueFactory;
+import de.nordakademie.vieluf.factory.EventQueueFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ListEventQueueTest {
+public abstract class EventQueueTest {
 
-    @Test
-    public void testListEventQueueFactory() {
-        EventQueue<Object> eventQueue = new ListEventQueueFactory<>().createQueue();
-        Assertions.assertTrue(eventQueue instanceof ListEventQueue<Object>);
+    private final EventQueue<Object> eventQueue;
+
+    public EventQueueTest(EventQueueFactory<Object> eventQueueFactory) {
+        this.eventQueue = eventQueueFactory.createQueue();
     }
 
     @Test
-    public void testListEventQueue() {
-        EventQueue<Object> eventQueue = new ListEventQueueFactory<>().createQueue();
+    public void testStaticArrayEventQueue() {
         double[] testData = createTestData(100);
         double currentTimeStamp = Arrays
                 .stream(testData)
@@ -36,7 +35,6 @@ public class ListEventQueueTest {
 
     @Test
     public void testDynamicArrayEventQueue() {
-        EventQueue<Object> eventQueue = new ArrayEventQueueFactory<>().createQueue();
         double[] baseData = createTestData(100);
         double currentTimeStamp = Arrays
                 .stream(baseData)
